@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Applications du BTS SIO - LDV</title>
+<!-- BOOTSTRAP STYLES-->
+<link href="assets/css/bootstrap.css" rel="stylesheet" />
+<!-- FONTAWESOME STYLES-->
+<link href="assets/css/font-awesome.css" rel="stylesheet" />
+<!-- CUSTOM STYLES-->
+<link href="assets/css/custom.css" rel="stylesheet" />
+<!-- GOOGLE FONTS-->
+<link href='http://fonts.googleapis.com/css?family=Open+Sans'
+ rel='stylesheet' type='text/css' />
+<script type="text/javascript">
+
+function test() {
+    
+
+//document.getElementById("cardgroupes").value);
+    var liste = document.getElementById("leseleves");
+    var cardG = document.getElementById("cardgroupes");
+    alert(cardG.value);
+    alert(liste.value);
+    donnees = "cardGrp="+cardG.value+"&personnes="+liste.value;
+    if (window.XMLHttpRequest) { xhr = new XMLHttpRequest(); }
+    else {
+     if (window.ActiveXObject) { 
+      try {
+       xhr = new ActiveXObject("Msxml2.XMLHTTP");
+        } catch (e) {
+          xhr = new ActiveXObject("Microsoft.XMLHTTP");
+       }
+      } else { 
+       alert("Votre navigateur ne supporte pas les objets XMLHTTPRequest..."); 
+       xhr = false; 
+    }
+ }
+ xhr.onreadystatechange = function() {
+  if (xhr.readyState==4) {
+   if (xhr.status==200) {
+    alert(xhr.responseText);
+    } else {
+       alert("Une erreur est survenue...");
+      }     
+   } else {
+      alert(xhr.status);   
+    } 
+  }
+ xhr.open("POST",window.location.href,true);
+ xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+ xhr.send(donnees);
+ 
+        /*$.ajax({
+	   url : "jsonpartitionne.html.php",
+	   type : 'POST',
+	   cache : false,
+	   dataType : 'json',
+     data : {"cardGrp":cardG, "personnes" : liste },
+	   success : function(json, statut) { 
+	      jsoncallback(json);
+        console.log(json);
+	   }
+    });*/
+} 
+
+/*function jsoncallback(objetJS) {
+  // alert("Nombre ds le premier groupe = " + objetJS.groupes.length);
+  $("#res").html("");
+  for (var i = 0; i < objetJS.groupes.length; i++ ) {
+    // http://www.w3schools.com/jquery/jquery_dom_add.asp
+    var div = document.createElement("div");
+    var ul  = document.createElement("ul");
+
+    // classes bootstrap twitter
+    div.setAttribute("class", "col-sm-4");
+    var div1 = document.createElement("div");
+    div1.setAttribute("class", "panel panel-info");
+    var div2 = document.createElement("div");
+    div2.setAttribute("class", "panel-heading");
+    var title = document.createElement("h3");
+    title.setAttribute("class", "panel-title");
+    // nomme le groupe à partir de "A" dont le code ascii est 65
+    title.innerHTML="<span class='badge pull-right'>"+ String.fromCharCode(65+i) +"</span> groupe";
+    var div3 = document.createElement("div");
+    div3.setAttribute("class", "panel-body");
+    
+    for (var j = 0; j < objetJS.groupes[i].length; j++) {
+      var li = document.createElement("li");
+      li.innerHTML = objetJS.groupes[i][j].nom;
+      ul.appendChild(li);   
+    }
+
+    div3.appendChild(ul);
+    div1.appendChild(div2);
+    div2.appendChild(title);
+    div1.appendChild(div3);
+    div.appendChild(div1);	     
+    
+    //div.appendChild(ul);
+    $("#res").append(div);
+  }*/
+  
+    
+/*
+exemple pris ici 
+http://getbootstrap.com/examples/theme/ 
+	
+<div class="col-sm-4">
+	   <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="panel-title">Panel title</h3>
+      </div>
+      <div class="panel-body">
+        Panel content
+      </div>
+    </div>
+  </div>  
+	    
+}*/
+  
+
+</script>
+
+<h2>Générateur de groupes</h2>
+  <p>
+   Cette application vous permet de générer aléatoirement des groupes de
+   travail (pour des devoirs par exemple)<br /> Optionnellement, vous
+   pouvez demander la génération de correspondance de groupes pour la
+   correction par ses pairs (évaluateur/évalué)
+  </p>
+ <!--</div>
+</div>-->
+<!-- /. ROW  -->
+<hr />
+<div class="row">
+ <div class="col-md-12">
+  <!-- Form Elements -->
+  <div class="panel panel-default">
+   <div class="panel-heading">Données pour la génération des groupes</div>
+   <div class="panel-body">
+    <div class="row">
+     <form>
+      <div class="col-md-4">
+       <div class="form-group">
+        <label>Intitulé du devoir</label> <input class="form-control" />
+       </div>
+       <div class="form-group">
+        <div class="checkbox">
+         <label> <input type="checkbox" value="" />Correction pas ses
+          pairs
+         </label>
+        </div>
+        <div class="form-group">
+        <div class="checkbox">
+         <label> <input type="text" id='cardgroupes' value="3"/>Card max des groupes
+         </label>
+        </div>
+       </div>
+      </div>
+      <div class="col-md-8">
+       <div class="form-group">
+        <label>Fichier des élèves (csv = prénom;nom)</label> <input
+         type="file" />
+       </div>
+       <div class="form-group">
+         <label class="col-sm-12 control-label no-padding-right" for="listeeleves">Liste élèves</label>
+          <div class="col-lg-8 col-md-8 col-sm-8">
+          <textarea class="form-control" id="leseleves" name="listeeleves">a
+b 
+c
+d
+e
+f
+g
+h
+i
+j</textarea>
+          </div>
+       </div>
+          
+       <div class="form-group">
+        <button type="submit" class="btn btn-default">Soumettre</button>
+        <button type="button" class="btn" onClick="test()">test ajax</button>
+       </div>
+      </div>
+     </form>
+    </div>
+   </div>
+  </div>
+  <!-- Panel -->
+
+  <div class="panel panel-default">
+   <div class="panel-heading">Données pour la génération des groupes</div>
+   <div class="panel-body">
+    <div class="row">
+     <h3>[Choix d'une partition]</h3>
+     <div id="choixGroupe"></div>
+    </div>
+   </div>
+  </div>
+  <div class="panel panel-default">
+   <div class="panel-heading">Voici les groupes</div>
+   <div class="panel-body">
+    <div class="row" id="res">
+     <h3>res...</h3>
+
+    </div>
+   </div>
+   <form>
+    <button type="submit" class="btn btn-primary">Export PDF</button>
+   </form>
+  </div>
+ </div>
+ <!-- col -->
+</div>
+<!-- /. ROW  -->
+<!-- BOOTSTRAP SCRIPTS -->
+<script src="assets/js/bootstrap.min.js"></script>
+<!-- METISMENU SCRIPTS -->
+<script src="assets/js/jquery.metisMenu.js"></script>
+<!-- CUSTOM SCRIPTS -->
+<script src="assets/js/custom.js"></script>
+</body>
+</html>

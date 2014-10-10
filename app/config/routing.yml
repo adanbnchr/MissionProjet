@@ -1,0 +1,5 @@
+org_forma:
+    resource: "@OrgFormaBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
